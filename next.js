@@ -1,32 +1,36 @@
-// // aun no funciona
+$(document).ready(function () {
+  $("#mas").click(function (event) {
+    $("#esconder").slideToggle("slow");
+    $heightDown = $(window).height() - $("#esconder").height();
 
-// document.querySelector("#mas").addEventListener("click", traerDatos());
+    $("html, body").animate(
+      {
+        scrollTop: $heightDown,
+      },
+      1000
+    );
+  });
 
-// function traerDatos() {
-//   var request = new XMLHttpRequest();
-//   request.open(
-//     "GET",
-//     "https://pokeapi.co/api/v2/pokemon/?offset=20&limit=20",
-//     true
-//   );
+  $("#name").html("");
+  $("#url").html("");
+  $.ajax({
+    type: "get",
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
+    url: "https://pokeapi.co/api/v2/pokemon/?offset=20&limit=20",
+    data: "data",
 
-//   request.send();
-//   request.onreadystatechange = function () {
-//     if (this.readyState == 4 && this.status == 200) {
-//       respuesta = JSON.parse(this.responseText);
-
-//       let name = document.querySelector("#name");
-//       name.innerHTML = "";
-
-//       let characteristic = document.querySelector("#characteristic");
-//       characteristic.innerHTML = "";
-
-//       for (let item of respuesta.results) {
-//         name.innerHTML += ` <ul>${item.name}</ul> `;
-//         characteristic.innerHTML += ` <ul><a href= "${item.url}" ></a></ul> ${item.url}`;
-//       }
-
-//       //   var nombre = document.querySelector("#nombre-pokemon");
-//     }
-//   };
-// }
+    success: function (data) {
+      console.log(data.results);
+      $.each(data.results, function (i, item) {
+        $("#n").html($("#n").html() + ` <ul>${item.name}</ul> `);
+        $("#c").html($("#c").html() + ` <ul>${item.url}</ul> `);
+      });
+    },
+    error: function (xhr, status, error) {
+      console.log(xhr);
+      console.log(status);
+      console.log(error);
+    },
+  });
+});
