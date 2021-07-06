@@ -1,28 +1,55 @@
-document.querySelector("#body").addEventListener("click", traerDatos());
+$(document).ready(function () {
+  $("#mas").click(function () {
+    $("#name").html("");
+    $.ajax({
+      type: "get",
+      contentType: "application/json; charset=utf-8",
+      dataType: "json",
+      url: "https://pokeapi.co/api/v2/pokemon/",
+      data: "data",
 
-function traerDatos() {
-  var request = new XMLHttpRequest();
-  request.open("GET", "https://pokeapi.co/api/v2/pokemon/", true);
+      success: function (data) {
+        console.log(data.results);
+        $.each(data.results, function (i, item) {
+          $("#name").html($("#name").html() + ` <ul>${item.name}</ul> `);
+          $("#url").html($("#url").html() + ` <ul>${item.url}</ul> `);
+        });
+      },
+      error: function (xhr, status, error) {
+        console.log(xhr);
+        console.log(status);
+        console.log(error);
+      },
+    });
+  });
+});
 
-  request.send();
-  request.onreadystatechange = function () {
-    if (this.readyState == 4 && this.status == 200) {
-      respuesta = JSON.parse(this.responseText);
+//  codigo que funciona con vainilla js|
+// document.querySelector("#body").addEventListener("click", traerDatos());
 
-      //   console.log(respuesta.results);
+// function traerDatos() {
+//   var request = new XMLHttpRequest();
+//   request.open("GET",, true);
 
-      let name = document.querySelector("#name");
-      name.innerHTML = "";
+//   request.send();
+//   request.onreadystatechange = function () {
+//     if (this.readyState == 4 && this.status == 200) {
+//       respuesta = JSON.parse(this.responseText);
 
-      let characteristic = document.querySelector("#characteristic");
-      characteristic.innerHTML = "";
+//       //   console.log(respuesta.results);
 
-      for (let item of respuesta.results) {
-        name.innerHTML += ` <ul>${item.name}</ul> `;
-        characteristic.innerHTML += ` <ul><a href= "${item.url}" ></a></ul> ${item.url}`;
-      }
+//       let name = document.querySelector("#name");
+//       name.innerHTML = "";
 
-      //   var nombre = document.querySelector("#nombre-pokemon");
-    }
-  };
-}
+//       let characteristic = document.querySelector("#characteristic");
+//       characteristic.innerHTML = "";
+
+//       for (let item of respuesta.results) {
+//         name.innerHTML += ` <ul>${item.name}</ul> `;
+//         characteristic.innerHTML += ` <ul><a href= "${item.url}" ></a></ul> ${item.url}`;
+//       }
+
+//       //   var nombre = document.querySelector("#nombre-pokemon");
+//     }
+//   };
+// }
