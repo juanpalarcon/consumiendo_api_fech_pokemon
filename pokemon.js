@@ -12,10 +12,15 @@ $(document).ready(function () {
       console.log(data.results);
       $.each(data.results, function (i, item) {
         $("#name").html($("#name").html() + ` <ul>${item.name}</ul> `);
-        $("#url").html($("#url").html() + ` <ul>${item.url}</ul> `);
+        $("#url").html(
+          $("#url").html() +
+            ` <ul><button>'<a href=${item.url} >¡Quiero saber mas de este pokemon!'</a></button></ul> `
+        );
       });
 
-      function masPokemones() {}
+      function saberMas() {
+        $("#mas").click(function () {});
+      }
     },
     error: function (xhr, status, error) {
       console.log(xhr);
