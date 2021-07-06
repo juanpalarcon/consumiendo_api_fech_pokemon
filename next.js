@@ -21,6 +21,7 @@ $(document).ready(function () {
     data: "data",
 
     success: function (data) {
+      $("#esconder").hide();
       console.log(data.results);
       $.each(data.results, function (i, item) {
         $("#n").html($("#n").html() + ` <ul>${item.name}</ul> `);
